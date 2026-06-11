@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% set show_home = true %}
+{% block title %}Results — Cayman Driving Test{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="results-hero {% if passed %}pass{% else %}fail{% endif %}">
+    <div class="results-icon">{% if passed %}🏆{% else %}📚{% endif %}</div>
+    <div class="results-verdict">{% if passed %}PASSED!{% else %}NOT PASSED{% endif %}</div>
+    <div class="results-score">{{ score }}/{{ total }}</div>
+    <div class="results-msg">
+      {% if passed %}
+        Great work! You scored {{ pct }}% — above the 80% pass mark.
+      {% else %}
+        You needed {{ pass_needed }}/{{ total }} (80%) to pass.
+        Keep studying — you need <strong>{{ pass_needed - score }} more correct</strong>.
+      {% endif %}
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-box-num num-green">{{ score }}</div><div class="stat-box-label">Correct</div></div>
+      <div class="stat-box"><div class="stat-box-num num-red">{{ total - score }}</div><div class="stat-box-label">Wrong</div></div>
+      <div class="stat-box"><div class="stat-box-num num-navy">{{ pct }}%</div><div class="stat-box-label">Score</div></div>
+    </div>
+    <a href="/start" class="btn btn-navy mb10" onclick="event.preventDefault(); document.getElementById('retakeForm').submit()">🔄 Retake Same Mode</a>
+    <a href="/" class="btn btn-outline">🏠 Back to Home</a>
+
+    <form id="retakeForm" method="POST" action="/start" style="display:none">
+      <input type="hidden" name="mode" value="random">
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    {% set wrong_items = answers | selectattr('is_correct', 'equalto', false) | list %}
+    {% set right_items = answers | selectattr('is_correct', 'equalto', true) | list %}
+
+    {% if wrong_items %}
+    <div class="section-head">❌ Questions to Review ({{ wrong_items | length }})</div>
+    {% for a in wrong_items %}
+    <div class="review-item ri-err">
+      <div class="ri-qnum">Q{{ loop.index }} of wrong</div>
+      <div class="ri-qtitle">{{ a.title }}</div>
+      <div class="ri-your">Your answer: {{ a.options[a.selected] if a.selected >= 0 else 'No answer' }}</div>
+      <div class="ri-correct-ans">✓ Correct: {{ a.options[a.correct] }}</div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="section-head" style="margin-top:{% if wrong_items %}20px{% else %}0{% endif %}">✅ Correct Answers ({{ right_items | length }})</div>
+    {% for a in right_items %}
+    <div class="review-item ri-ok">
+      <div class="ri-qnum">Q{{ a.qid }}</div>
+      <div class="ri-qtitle">{{ a.title }}</div>
+      <div class="ri-tick">✓ {{ a.options[a.correct] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

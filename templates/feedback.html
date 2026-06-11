@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% set show_home = true %}
+{% block title %}Answer {{ current }} — Cayman Driving Test{% endblock %}
+
+{% block progress %}
+<div class="progress-wrap">
+  <div class="progress-labels" style="max-width:720px;margin:0 auto;">
+    <span>Question {{ current }} of {{ total }}</span>
+    <span>Score: {{ score }}/{{ current }} &nbsp;·&nbsp; {{ ((current/total)*100)|round|int }}% complete</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" style="width:{{ ((current/total)*100)|round|int }}%"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <span class="card-header-label">QUESTION {{ current }} — RESULT</span>
+    <span class="card-header-sub">Score: {{ score }}/{{ current }}</span>
+  </div>
+  <div class="card-body">
+    <p class="q-text">{{ q.title }}</p>
+
+    <div class="options">
+      {% for opt in q.options %}
+      {% set idx = loop.index0 %}
+      <div class="opt
+        {% if idx == correct %}correct
+        {% elif idx == selected and not is_correct %}wrong
+        {% endif %}">
+        <span class="opt-circle">{{ letters[idx] }}</span>
+        <span class="opt-text">{{ opt }}</span>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="feedback {% if is_correct %}fb-ok{% else %}fb-err{% endif %}">
+      <span class="fb-icon">{% if is_correct %}✅{% else %}❌{% endif %}</span>
+      <span>
+        {% if is_correct %}
+          Correct! Well done.
+        {% else %}
+          Incorrect. The correct answer is: <strong>{{ q.options[correct] }}</strong>
+        {% endif %}
+      </span>
+    </div>
+
+    {% if is_last %}
+      <a href="/results" class="btn btn-gold">See My Results 🏁</a>
+    {% else %}
+      <a href="/question" class="btn {% if is_correct %}btn-green{% else %}btn-red{% endif %}">
+        Next Question → ({{ current + 1 }}/{{ total }})
+      </a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

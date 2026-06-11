@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% set show_home = true %}
+{% block title %}Question {{ current }} — Cayman Driving Test{% endblock %}
+
+{% block progress %}
+<div class="progress-wrap">
+  <div class="progress-labels" style="max-width:720px;margin:0 auto;">
+    <span>Question {{ current }} of {{ total }}</span>
+    <span>Score: {{ score }}/{{ current - 1 }} &nbsp;·&nbsp; {{ pct }}% complete</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" style="width:{{ pct }}%"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <span class="card-header-label">QUESTION {{ current }}</span>
+    <span class="card-header-sub">Score: {{ score }}/{{ current - 1 }}</span>
+  </div>
+  <div class="card-body">
+    <p class="q-text">{{ q.title }}</p>
+
+    <form method="POST" action="/answer" id="answerForm">
+      <div class="options">
+        {% for opt in q.options %}
+        <label class="opt" for="opt{{ loop.index0 }}">
+          <input type="radio" name="selected" id="opt{{ loop.index0 }}" value="{{ loop.index0 }}" required>
+          <span class="opt-circle">{{ letters[loop.index0] }}</span>
+          <span class="opt-text">{{ opt }}</span>
+        </label>
+        {% endfor %}
+      </div>
+      <button type="submit" class="btn btn-navy">Submit Answer</button>
+    </form>
+  </div>
+</div>
+
+{% if current <= 3 %}
+<div style="background:#fff;border-radius:12px;padding:14px 18px;font-size:12px;color:var(--muted);box-shadow:0 1px 8px rgba(0,0,0,.06)">
+  💡 <strong>Tip:</strong> Read every option carefully before selecting your answer.
+</div>
+{% endif %}
+{% endblock %}

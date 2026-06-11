@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Home — Cayman Islands Driving Theory Test{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="hero">
+    <div class="hero-flag">🇰🇾</div>
+    <h2>Ready to Practice?</h2>
+    <p>Prepare for your Cayman Islands driving theory test — {{ total }} questions in our full question bank</p>
+  </div>
+  <div class="card-body">
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-num">{{ total }}</div><div class="stat-label">Total Questions</div></div>
+      <div class="stat"><div class="stat-num">80%</div><div class="stat-label">Pass Mark</div></div>
+      <div class="stat"><div class="stat-num">20/25</div><div class="stat-label">Needed to Pass</div></div>
+      <div class="stat"><div class="stat-num">50 mph</div><div class="stat-label">Speed Limit</div></div>
+    </div>
+
+    <div class="note">
+      💡 <strong>Pass requirement:</strong> Answer at least <strong>80%</strong> correctly to pass each practice set. Choose a mode below to begin!
+    </div>
+
+    <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px">🎯 Choose your practice mode:</p>
+    <form method="POST" action="/start" id="modeForm">
+      <input type="hidden" name="mode" id="modeInput" value="random">
+      <div class="mode-grid">
+        <div class="mode-card" onclick="selectMode('ppt1')">
+          <div class="mc-icon">📝</div>
+          <div class="mc-title">PPT Section 1</div>
+          <div class="mc-sub">Q1–25 · Official study bank</div>
+        </div>
+        <div class="mode-card" onclick="selectMode('ppt2')">
+          <div class="mc-icon">📋</div>
+          <div class="mc-title">PPT Section 2</div>
+          <div class="mc-sub">Q26–50 · Official study bank</div>
+        </div>
+        <div class="mode-card" onclick="selectMode('extra')">
+          <div class="mc-icon">➕</div>
+          <div class="mc-title">Extra Questions</div>
+          <div class="mc-sub">Q51–120 · Additional practice</div>
+        </div>
+        <div class="mode-card" onclick="selectMode('random')">
+          <div class="mc-icon">🔀</div>
+          <div class="mc-title">Random Mix</div>
+          <div class="mc-sub">25 random questions</div>
+        </div>
+        <div class="mode-card" onclick="selectMode('all')" style="grid-column:span 2">
+          <div class="mc-icon">🏆</div>
+          <div class="mc-title">Full Challenge</div>
+          <div class="mc-sub">40 random questions from entire bank</div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{# ── PDF Download + Quick Facts card ── #}
+<div class="card">
+  <div class="card-body">
+
+    {# PDF download section #}
+    <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px">📥 Road Safety PDF Book</p>
+    <div style="display:flex;align-items:center;gap:14px;background:#eaf4fb;border:1px solid #aed6f1;border-radius:10px;padding:14px 16px;margin-bottom:20px">
+      <div style="font-size:2.2rem;flex-shrink:0">📄</div>
+      <div>
+        <p style="margin:0 0 3px;font-size:14px;font-weight:700;color:#1a5276">Cayman Islands Road Safety Guide</p>
+        <p style="margin:0 0 10px;font-size:13px;color:#444">
+          The official study resource for the <strong>Cayman driving test</strong> — covers road rules, signs,
+          speed limits, and safe driving practices required for your licence.
+        </p>
+        {# ── Replace the href value with the actual path to your uploaded PDF file ── #}
+        <a href="/static/road_safety.pdf"
+           download
+           style="display:inline-block;background:#1a5276;color:#fff;padding:7px 16px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:700">
+          ⬇ Download Free PDF
+        </a>
+      </div>
+    </div>
+
+    {# Quick reference facts table (unchanged) #}
+    <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px">📋 Quick Reference Facts</p>
+    <table class="facts-table">
+      <tr><td class="facts-icon">🚗</td><td class="facts-label">Speed limit (Cayman Islands)</td><td class="facts-val">50 mph</td></tr>
+      <tr><td class="facts-icon">🏫</td><td class="facts-label">School zone speed limit</td><td class="facts-val">15 mph</td></tr>
+    </table>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function selectMode(mode) {
+  document.getElementById('modeInput').value = mode;
+  document.getElementById('modeForm').submit();
+}
+</script>
+{% endblock %}

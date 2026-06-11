@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Cayman Islands Driving Theory Test{% endblock %}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  :root {
+    --navy:#002868; --navy-light:#1a3a80; --red:#C8102E; --gold:#F4B942;
+    --white:#fff; --light:#EEF2FF; --border:#E2E8F0; --text:#1E293B; --muted:#64748B;
+    --green:#166534; --green-bg:#DCFCE7; --red-bg:#FEE2E2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+
+  /* Header */
+  header{background:var(--navy);position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+  .header-inner{max-width:720px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+  .header-flag{font-size:28px;flex-shrink:0}
+  .header-text h1{font-size:clamp(13px,4vw,17px);font-weight:800;color:#fff;line-height:1.2}
+  .header-text p{font-size:11px;color:var(--gold);font-weight:500}
+  .header-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .pill{background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px}
+  .home-btn{background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:700;padding:5px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.25);cursor:pointer;text-decoration:none;transition:background .15s}
+  .home-btn:hover{background:rgba(255,255,255,.22)}
+  .red-bar{background:var(--red);height:4px}
+
+  /* Progress */
+  .progress-wrap{background:var(--navy);padding:8px 16px 10px}
+  .progress-labels{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.6);margin-bottom:5px;max-width:720px;margin-left:auto;margin-right:auto}
+  .progress-track{background:rgba(255,255,255,.15);border-radius:99px;height:6px;max-width:720px;margin:0 auto;overflow:hidden}
+  .progress-fill{background:var(--gold);height:100%;border-radius:99px;transition:width .4s ease}
+
+  /* Main */
+  main{flex:1;max-width:720px;margin:0 auto;width:100%;padding:20px 16px}
+
+  /* Footer */
+  footer{background:var(--navy);text-align:center;padding:18px 16px;margin-top:auto}
+  .footer-copy{font-size:12px;color:rgba(255,255,255,.5)}
+  .footer-brand{color:var(--gold);font-weight:700}
+
+  /* Card */
+  .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 20px rgba(0,40,104,.10);margin-bottom:16px}
+  .card-header{background:var(--navy);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+  .card-header-label{font-size:12px;font-weight:700;color:var(--gold)}
+  .card-header-sub{font-size:12px;color:rgba(255,255,255,.55)}
+  .card-body{padding:22px 20px}
+
+  /* Buttons */
+  .btn{display:inline-block;padding:14px 24px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center;transition:all .18s;font-family:inherit;width:100%}
+  .btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:#003a99;transform:translateY(-1px)}
+  .btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#a50d24}
+  .btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#14532d}
+  .btn-outline{background:#fff;color:var(--navy);border:2px solid var(--navy)}.btn-outline:hover{background:var(--navy);color:#fff}
+  .btn-gold{background:var(--gold);color:var(--navy);font-weight:800}.btn-gold:hover{background:#e0a830}
+  .btn-sm{padding:10px 18px;font-size:13px;width:auto}
+  .mb10{margin-bottom:10px;display:block}
+
+  /* Hero */
+  .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%);padding:36px 24px 28px;text-align:center}
+  .hero-flag{font-size:60px;margin-bottom:12px}
+  .hero h2{font-size:26px;font-weight:900;color:#fff;margin-bottom:8px;line-height:1.2}
+  .hero p{font-size:14px;color:rgba(255,255,255,.75);max-width:400px;margin:0 auto;line-height:1.5}
+
+  /* Stats */
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+  .stat{background:var(--light);border-radius:12px;padding:16px 12px;text-align:center}
+  .stat-num{font-size:28px;font-weight:900;color:var(--navy)}
+  .stat-label{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+
+  /* Mode grid */
+  .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+  .mode-card{border:2px solid var(--border);border-radius:14px;padding:18px 14px;text-align:center;cursor:pointer;transition:all .2s;background:#fff}
+  .mode-card:hover{border-color:var(--navy);background:#EEF2FF;transform:translateY(-2px)}
+  .mode-card .mc-icon{font-size:28px;margin-bottom:6px}
+  .mode-card .mc-title{font-size:14px;font-weight:800;color:var(--navy)}
+  .mode-card .mc-sub{font-size:11px;color:var(--muted);margin-top:3px}
+
+  /* Note */
+  .note{background:#FFFBEB;border-left:3px solid var(--gold);padding:11px 14px;border-radius:0 8px 8px 0;font-size:12px;color:#78350F;margin-bottom:20px;line-height:1.5}
+
+  /* Question */
+  .q-text{font-size:17px;font-weight:700;color:var(--navy);line-height:1.5;margin-bottom:22px}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+  .opt{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:12px;border:2px solid var(--border);cursor:pointer;transition:all .18s;background:#fff;user-select:none}
+  .opt:hover{border-color:#94A3B8;background:#F8FAFC}
+  .opt input[type=radio]{display:none}
+  .opt.selected{border-color:var(--navy);background:#EEF2FF}
+  .opt-circle{width:30px;height:30px;border-radius:50%;background:#E2E8F0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;color:var(--muted);margin-top:1px;transition:all .18s}
+  .opt.selected .opt-circle{background:var(--navy);color:#fff}
+  .opt.correct{border-color:#16A34A !important;background:#DCFCE7 !important}
+  .opt.correct .opt-circle{background:#16A34A;color:#fff}
+  .opt.wrong{border-color:var(--red) !important;background:var(--red-bg) !important}
+  .opt.wrong .opt-circle{background:var(--red);color:#fff}
+  .opt-text{font-size:14px;color:var(--text);font-weight:500;line-height:1.45;padding-top:4px}
+
+  /* Feedback */
+  .feedback{display:flex;align-items:flex-start;gap:10px;padding:13px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:14px;line-height:1.45}
+  .fb-ok{background:#DCFCE7;color:#14532D;border:1px solid #86EFAC}
+  .fb-err{background:var(--red-bg);color:#7F1D1D;border:1px solid #FCA5A5}
+  .fb-icon{font-size:18px;flex-shrink:0}
+
+  /* Results */
+  .results-hero{padding:36px 24px 28px;text-align:center}
+  .results-hero.pass{background:linear-gradient(135deg,#14532D,#16A34A)}
+  .results-hero.fail{background:linear-gradient(135deg,#7F1D1D,var(--red))}
+  .results-icon{font-size:60px;margin-bottom:10px}
+  .results-verdict{font-size:30px;font-weight:900;color:#fff}
+  .results-score{font-size:50px;font-weight:900;color:#fff;margin:6px 0}
+  .results-msg{font-size:14px;color:rgba(255,255,255,.85);max-width:380px;margin:0 auto;line-height:1.5}
+  .stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
+  .stat-box{text-align:center;padding:14px 8px;border-radius:12px;background:var(--light)}
+  .stat-box-num{font-size:26px;font-weight:900}
+  .stat-box-label{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+  .num-green{color:#16A34A}.num-red{color:var(--red)}.num-navy{color:var(--navy)}
+
+  /* Review */
+  .review-item{padding:13px 15px;border-radius:10px;margin-bottom:8px;font-size:13px}
+  .ri-ok{background:#F0FDF4;border-left:3px solid #16A34A}
+  .ri-err{background:#FFF1F2;border-left:3px solid var(--red)}
+  .ri-qnum{font-size:10px;font-weight:700;color:var(--muted);margin-bottom:3px}
+  .ri-qtitle{font-weight:600;color:var(--text);margin-bottom:5px;line-height:1.4}
+  .ri-your{font-size:12px;color:var(--red)}
+  .ri-correct-ans{font-size:12px;color:#16A34A;font-weight:700}
+  .ri-tick{font-size:12px;color:#16A34A}
+  .section-head{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;margin-top:4px}
+
+  /* Facts table */
+  .facts-table{width:100%;border-collapse:collapse;font-size:13px}
+  .facts-table tr{border-bottom:1px solid var(--border)}
+  .facts-table td{padding:9px 6px}
+  .facts-icon{width:30px;color:var(--muted)}
+  .facts-label{font-weight:600;color:var(--text)}
+  .facts-val{text-align:right;font-weight:700;color:var(--navy)}
+
+  /* Responsive */
+  @media(max-width:480px){.mode-grid{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr}}
+</style>
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-flag">🇰🇾</div>
+    <div class="header-text">
+      <h1>Cayman Islands Driving Test</h1>
+      <p>Official Theory Practice — letsgocayman</p>
+    </div>
+    <div class="header-right">
+      {% if show_home %}<a href="/" class="home-btn">🏠 Home</a>{% endif %}
+      <div class="pill">FREE</div>
+    </div>
+  </div>
+  {% block progress %}{% endblock %}
+  <div class="red-bar"></div>
+</header>
+
+<main>{% block content %}{% endblock %}</main>
+
+<footer>
+  <div style="font-size:20px;margin-bottom:4px">🇰🇾</div>
+  <div class="footer-copy">© 2026 <span class="footer-brand">letsgocayman</span> — All Rights Reserved</div>
+  <div class="footer-copy" style="margin-top:3px;font-size:10px">Practice resource for the Cayman Islands driving theory test</div>
+</footer>
+
+<script>
+// Highlight selected option
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      const radio = opt.querySelector('input[type=radio]');
+      if (radio) radio.checked = true;
+    });
+  });
+});
+</script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>
