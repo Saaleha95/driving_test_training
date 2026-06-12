@@ -1,4 +1,5 @@
 from flask import Flask, render_template, session, request, redirect, url_for, jsonify
+from flask import Flask, send_from_directory
 import random
 
 app = Flask(__name__)
@@ -574,6 +575,15 @@ def results():
         answers=answers,
         letters=LETTERS,
     )
+
+@app.route('/robots.txt')
+def robots():
+    return send_from_directory(app.static_folder, 'robots.txt')
+ 
+# ─── sitemap.xml (already working via /static/) ───────────────
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(app.static_folder, 'sitemap.xml')
 
 
 if __name__ == "__main__":
