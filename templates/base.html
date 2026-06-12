@@ -1,15 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-KY">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Primary SEO -->
 <meta name="description" content="Free Cayman Islands driving theory test practice. Prepare for your Cayman driving test with real PPT-style questions, instant feedback, and a free road safety PDF guide.">
+<meta name="keywords" content="Cayman Islands driving test, DVDL theory test, Cayman driving licence, driving test practice Cayman, Grand Cayman driving exam, DVDL practice questions, Cayman road rules, drivingtestcayman">
+<meta name="author" content="drivingtestcayman.online">
+<meta name="robots" content="index, follow">
 <link rel="canonical" href="https://drivingtestcayman.online/">
+
+<!-- Performance -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="theme-color" content="#002868">
+
+<!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+<meta property="og:type" content="website">
 <meta property="og:title" content="Cayman Driving Test - Free Practice Theory Test">
 <meta property="og:description" content="Free practice for the Cayman Islands driving theory test with real questions and instant feedback.">
 <meta property="og:url" content="https://drivingtestcayman.online/">
-<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cayman Driving Test">
+<meta property="og:locale" content="en_KY">
+<meta property="og:image" content="https://drivingtestcayman.online/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cayman Islands Driving Theory Test Practice">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cayman Driving Test - Free Practice Theory Test">
+<meta name="twitter:description" content="Free practice for the Cayman Islands DVDL driving theory test. Real questions, instant feedback.">
+<meta name="twitter:image" content="https://drivingtestcayman.online/og-image.png">
+
+<!-- Google AdSense -->
 <meta name="google-adsense-account" content="ca-pub-5902518344335566">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Cayman Driving Test",
+  "url": "https://drivingtestcayman.online",
+  "description": "Free Cayman Islands DVDL driving theory test practice resource",
+  "publisher": {
+    "@type": "Organization",
+    "name": "drivingtestcayman.online",
+    "url": "https://drivingtestcayman.online"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://drivingtestcayman.online/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Quiz",
+  "name": "Cayman Islands Driving Theory Test Practice",
+  "description": "Official-style practice questions for the Cayman Islands DVDL driving theory exam",
+  "educationalLevel": "beginner",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "about": {
+    "@type": "Thing",
+    "name": "Cayman Islands Driving Licence (DVDL)"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "drivingtestcayman.online",
+    "url": "https://drivingtestcayman.online"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I get a Cayman Islands driving licence?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "To get a Cayman Islands driving licence, you must pass a theory test at the DVDL (Department of Vehicle and Drivers' Licensing) office in Grand Cayman. Practice with our free test to prepare."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Cayman driving theory test hard?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Cayman Islands DVDL theory test covers road signs, rules of the road, and road safety. With regular practice using our free questions, most people pass first time."
+      }
+    }
+  ]
+}
+</script>
+
 <title>{% block title %}Cayman Driving Test - Free Practice Theory Test for Cayman Islands{% endblock %}</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
@@ -46,6 +138,9 @@
   footer{background:var(--navy);text-align:center;padding:18px 16px;margin-top:auto}
   .footer-copy{font-size:12px;color:rgba(255,255,255,.5)}
   .footer-brand{color:var(--gold);font-weight:700}
+  .footer-nav{margin-top:10px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+  .footer-nav a{color:rgba(255,255,255,.45);font-size:11px;text-decoration:none;transition:color .15s}
+  .footer-nav a:hover{color:var(--gold)}
 
   /* Card */
   .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 20px rgba(0,40,104,.10);margin-bottom:16px}
@@ -153,7 +248,7 @@
     <div class="header-flag">🇰🇾</div>
     <div class="header-text">
       <h1>Cayman Islands Driving Test</h1>
-      <p>Official Theory Practice — letsgocayman</p>
+      <p>Free DVDL Theory Practice — drivingtestcayman.online</p>
     </div>
     <div class="header-right">
       {% if show_home %}<a href="/" class="home-btn">🏠 Home</a>{% endif %}
@@ -168,8 +263,15 @@
 
 <footer>
   <div style="font-size:20px;margin-bottom:4px">🇰🇾</div>
-  <div class="footer-copy">© 2026 <span class="footer-brand">letsgocayman</span> — All Rights Reserved</div>
-  <div class="footer-copy" style="margin-top:3px;font-size:10px">Practice resource for the Cayman Islands driving theory test</div>
+  <div class="footer-copy">© 2026 <span class="footer-brand">drivingtestcayman.online</span> — All Rights Reserved</div>
+  <div class="footer-copy" style="margin-top:3px;font-size:10px">Free practice resource for the <strong style="color:rgba(255,255,255,.6)">Cayman Islands DVDL driving theory test</strong> — Grand Cayman</div>
+  <nav aria-label="Footer navigation" class="footer-nav">
+    <a href="/">Home</a>
+    <a href="/practice">Practice Test</a>
+    <a href="/mock-exam">Mock Exam</a>
+    <a href="/road-signs">Road Signs</a>
+    <a href="/about">About</a>
+  </nav>
 </footer>
 
 <script>
