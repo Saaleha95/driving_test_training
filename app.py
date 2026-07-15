@@ -501,8 +501,12 @@ def start():
 def question():
     questions = session.get("questions", [])
     current = session.get("current", 0)
-    if current >= len(questions):
-        return redirect(url_for("results"))
+    # NOTE: guard added — a cold visit (no active quiz session, e.g. a crawler
+    # or a bookmarked/shared link) used to fall through to len(questions)==0
+    # and redirect into a broken, contentless /results page. Send these
+    # visitors to the real content-rich home page instead.
+    if not questions or current >= len(questions):
+        return redirect(url_for("home"))
     q = questions[current]
     return render_template(
         "question.html",
@@ -519,9 +523,11 @@ def question():
 def answer():
     questions = session.get("questions", [])
     current = session.get("current", 0)
+    # NOTE: guard added — same rationale as /question above.
+    if not questions or current >= len(questions):
+        return redirect(url_for("home"))
+
     selected = int(request.form.get("selected", -1))
-    if current >= len(questions):
-        return redirect(url_for("results"))
 
     q = questions[current]
     correct = q["correct"]
@@ -559,6 +565,12 @@ def answer():
 @app.route("/results")
 def results():
     questions = session.get("questions", [])
+    # NOTE: guard added — previously a cold visit here rendered a broken
+    # "PASSED! 0/0" page with total=0 (division-by-zero-avoided but
+    # nonsensical: passed = (0 >= 0) => True). Redirect to home instead.
+    if not questions:
+        return redirect(url_for("home"))
+
     answers = session.get("answers", [])
     score = session.get("score", 0)
     total = len(questions)
@@ -579,7 +591,7 @@ def results():
 @app.route('/robots.txt')
 def robots():
     return send_from_directory(app.static_folder, 'robots.txt')
- 
+
 # ─── sitemap.xml (already working via /static/) ───────────────
 @app.route('/sitemap.xml')
 def sitemap():
