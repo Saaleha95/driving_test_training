@@ -1,5 +1,9 @@
 User-agent: *
+Disallow: /question
+Disallow: /answer
+Disallow: /results
+Disallow: /start
+
 Allow: /
 
-# Sitemap location
-Sitemap: https://drivingtestcayman.online/static/sitemap.xml
+Sitemap: https://drivingtestcayman.online/sitemap.xml
